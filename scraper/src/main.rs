@@ -81,7 +81,7 @@ fn main() -> Result<()> {
         client
             .get(url)
             .header("Cookie", cookie)
-            .header("User-Agent", "The0x539's AoC scraper")
+            // .header("User-Agent", "The0x539's AoC scraper")
             .send()
             .context("transport error")?
             .error_for_status()
