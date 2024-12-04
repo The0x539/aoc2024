@@ -10,9 +10,8 @@ Counts ← ∧(insert : +1 ⬚0◡get):[]
 
 Part₂ ← (
   Split
-  ⊙Counts   # get counts of second column
-  ⊙¤        # ??????????????
-  ⟜(≡⬚0get) # lookup counts[first column], keeping first column
+  ⊙Counts
+  ⟜⬚0get
   /+×
 )
 
