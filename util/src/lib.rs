@@ -92,6 +92,15 @@ impl<N> From<Pos<N>> for (N, N) {
     }
 }
 
+pub fn in_bounds<N: PartialOrd>(
+    point: Pos<N>,
+    start: impl Into<Pos<N>>,
+    end: impl Into<Pos<N>>,
+) -> bool {
+    let (start, end) = (start.into(), end.into());
+    (start.x..end.x).contains(&point.x) && (start.y..end.y).contains(&point.y)
+}
+
 pub fn parse_input_lines<T, F: FnMut(&'static str) -> T>(input_data: &'static str, f: F) -> Vec<T> {
     input_data.lines().map(str::trim).map(f).collect()
 }
