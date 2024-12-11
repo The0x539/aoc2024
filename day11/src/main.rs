@@ -2,7 +2,7 @@
 
 use util::*;
 
-type N = num_bigint::BigUint;
+type N = u64;
 
 type In = Vec<N>;
 type Out = usize;
@@ -22,8 +22,8 @@ fn solve(input: &In, iterations: u8) -> Out {
         for (value, count) in rocks {
             let mut add = |k: N| *new_rocks.entry(k).or_default() += count;
 
-            if value == 0u8.into() {
-                add(1u8.into());
+            if value == 0 {
+                add(1);
                 continue;
             }
 
@@ -33,7 +33,7 @@ fn solve(input: &In, iterations: u8) -> Out {
                 add(p(&s[..i]));
                 add(p(&s[i..]));
             } else {
-                add(value * 2024u32);
+                add(value * 2024);
             }
         }
         rocks = new_rocks;
