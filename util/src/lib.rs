@@ -101,6 +101,15 @@ pub fn in_bounds<N: PartialOrd>(
     (start.x..end.x).contains(&point.x) && (start.y..end.y).contains(&point.y)
 }
 
+pub fn iter_2d<X, Y>(xs: X, ys: Y) -> impl Iterator<Item = (X::Item, Y::Item)>
+where
+    X: Iterator + Clone,
+    Y: Iterator,
+    Y::Item: Clone,
+{
+    ys.flat_map(move |y| xs.clone().zip(std::iter::repeat(y)))
+}
+
 pub fn parse_input_lines<T, F: FnMut(&'static str) -> T>(input_data: &'static str, f: F) -> Vec<T> {
     input_data.lines().map(str::trim).map(f).collect()
 }
