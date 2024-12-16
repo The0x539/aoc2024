@@ -4,6 +4,10 @@ use std::str::FromStr;
 
 pub use std::collections::{BTreeMap, BTreeSet, HashMap, HashSet};
 
+pub fn udlr<T: From<i8>>() -> [(T, T); 4] {
+    [(0, -1), (0, 1), (-1, 0), (1, 0)].map(|(x, y)| (x.into(), y.into()))
+}
+
 pub fn p<T>(s: &str) -> T
 where
     T: FromStr,
