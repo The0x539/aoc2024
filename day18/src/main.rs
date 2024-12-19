@@ -1,5 +1,7 @@
 #![cfg_attr(test, feature(test))]
 
+use std::cmp::Ordering;
+
 use util::*;
 
 type N = i32;
@@ -47,23 +49,25 @@ fn solve(bytes: &HashSet<P>) -> Option<N> {
     distances.get(&end).copied()
 }
 
-fn part1(n: &[In]) -> Out {
+fn part1(input: &[In]) -> Out {
     let num_bytes = if cfg!(test) { 12 } else { 1024 };
-    let rocks = n[..num_bytes].iter().copied().collect::<HashSet<_>>();
+    let rocks = input[..num_bytes].iter().copied().collect::<HashSet<_>>();
     solve(&rocks).unwrap().to_string()
 }
 
-fn part2(n: &[In]) -> Out {
-    let num_bytes = if cfg!(test) { 12 } else { 1024 };
-    let mut bytes = n[..num_bytes].iter().copied().collect::<HashSet<_>>();
-
-    for &rock in &n[num_bytes..] {
-        bytes.insert(rock);
-        if solve(&bytes).is_none() {
-            return format!("{},{}", rock.x, rock.y);
+fn part2(input: &[In]) -> Out {
+    let f = |&n| {
+        let bytes = input[..n].iter().copied().collect::<HashSet<_>>();
+        if solve(&bytes).is_some() {
+            Ordering::Less
+        } else {
+            Ordering::Greater
         }
-    }
-    panic!()
+    };
+
+    let counts = (0..input.len()).collect::<Vec<_>>();
+    let index = counts.binary_search_by(f).unwrap_err() - 1;
+    format!("{},{}", input[index].x, input[index].y)
 }
 
 util::register!(parse, part1, part2);
